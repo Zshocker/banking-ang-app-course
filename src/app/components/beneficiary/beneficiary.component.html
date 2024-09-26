@@ -1,0 +1,33 @@
+<div class="beneficiary-container">
+
+  <h2>Ajouter un Bénéficiaire</h2>
+
+  <!-- Internal Beneficiary Selection -->
+  <h3>Transfert Interne</h3>
+  <div *ngFor="let account of accounts">
+    <label>
+      <input type="radio" name="beneficiary" (change)="selectInternalBeneficiary(account)">
+      {{ account.accountNumber }} (Solde: {{ account.balance }}€)
+    </label>
+  </div>
+
+  <!-- External Beneficiary Form -->
+  <h3>Transfert Externe</h3>
+  <form (ngSubmit)="addExternalBeneficiary()">
+    <div>
+      <label for="iban">IBAN:</label>
+      <input type="text" id="iban" [(ngModel)]="externalIban" name="iban" required>
+      <div *ngIf="ibanError">{{ ibanError }}</div>
+    </div>
+    <div>
+      <label for="name">Nom du bénéficiaire:</label>
+      <input type="text" id="name" [(ngModel)]="beneficiaryName" name="name" required>
+    </div>
+    <div>
+      <label>
+        <input type="checkbox" [(ngModel)]="isFavorite" name="favorite"> Ajouter aux favoris
+      </label>
+    </div>
+    <button type="submit">Ajouter Bénéficiaire</button>
+  </form>
+</div>

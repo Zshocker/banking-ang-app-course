@@ -1,0 +1,24 @@
+<div *ngIf="currentUser">
+  <h2>Select Account</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Account Number</th>
+      <th>Balance</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr
+      *ngFor="let account of accounts"
+      (click)="selectAccount(account)"
+      [ngClass]="{'selected': selectedAccount?.id === account.id}">
+      <td>{{ account.accountNumber }}</td>
+      <td>{{ account.balance }}</td>
+      <td>{{ account.isActive ? 'Active' : 'Inactive' }}</td>
+    </tr>
+    </tbody>
+  </table>
+  <div *ngIf="errorMessage">{{ errorMessage }}</div>
+  <button (click)="confirmSelection()">Confirm Account</button>
+</div>

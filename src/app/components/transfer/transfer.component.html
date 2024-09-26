@@ -1,0 +1,21 @@
+<div class="transfer-container">
+  <h2>Effectuer un Transfert</h2>
+
+  <form (ngSubmit)="submitTransfer()">
+    <!-- Amount Input -->
+    <div>
+      <label for="amount">Montant à transférer (€):</label>
+      <input id="amount" type="number" [(ngModel)]="amount" name="amount" required min="1" max="5000">
+      <div *ngIf="amountError" class="error">{{ amountError }}</div>
+    </div>
+
+    <!-- Label Input -->
+    <div>
+      <label for="label">Libellé (facultatif):</label>
+      <input id="label" type="text" [(ngModel)]="label" name="label" maxlength="50">
+      <div *ngIf="labelError" class="error">{{ labelError }}</div>
+    </div>
+
+    <button type="submit">Transférer</button>
+  </form>
+</div>
