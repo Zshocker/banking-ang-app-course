@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Account, Client} from "../../models/models";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-transfer',
@@ -14,6 +15,8 @@ export class TransferComponent implements OnInit {
   labelError = '';
   currentUser?: Client;
   account?: Account;
+  constructor(private router: Router) {
+  }
 
   ngOnInit(): void {
     const storedUser = localStorage.getItem('currentUser');
@@ -24,7 +27,11 @@ export class TransferComponent implements OnInit {
         this.account = this.currentUser.accounts.filter(s => s.id === parseInt(storedAccountId))[0];
       }
     }
+    if (!this.currentUser) {
+      this.router.navigate(['/auth']).then(); // Redirect if not logged in
+    }
   }
+
 
   submitTransfer(): void {
     this.amountError = '';
@@ -52,7 +59,7 @@ export class TransferComponent implements OnInit {
 
   validateAmount(): boolean {
     const numericValue = this.amount;
-    return !isNaN(numericValue) && numericValue >= 1 && numericValue <= 5500;
+    return !isNaN(numericValue) && numericValue >= 1 && numericValue <= 5000;
   }
 
   validateLabel(): boolean {

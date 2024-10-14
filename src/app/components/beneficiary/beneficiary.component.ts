@@ -28,6 +28,10 @@ export class BeneficiaryComponent implements OnInit {
         this.accounts = getValidAccounts(this.currentUser).filter(s => s.id !== parseInt(storedAccountId));
       }
     }
+
+    if (!this.currentUser) {
+      this.router.navigate(['/auth']).then(); // Redirect if not logged in
+    }
   }
 
   selectInternalBeneficiary(account: any): void {
