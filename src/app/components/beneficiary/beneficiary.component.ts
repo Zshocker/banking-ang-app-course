@@ -34,12 +34,14 @@ export class BeneficiaryComponent implements OnInit {
     }
   }
 
-  selectInternalBeneficiary(account: any): void {
-    const beneficiary = {
+  selectInternalBeneficiary(account: Account): void {
+    const beneficiary: Beneficiary = {
       id: Date.now(),
       accountNumber: account.accountNumber,
+      accountBalance: account.balance,
       name: 'Internal Account',
-      isFavorite: false
+      isFavorite: false,
+      isExternal: false
     };
     this.saveBeneficiary(beneficiary);
   }
@@ -50,7 +52,8 @@ export class BeneficiaryComponent implements OnInit {
         id: Date.now(),
         iban: this.externalIban,
         name: this.beneficiaryName,
-        isFavorite: this.isFavorite
+        isFavorite: this.isFavorite,
+        isExternal: true
       };
       this.saveBeneficiary(beneficiary);
     } else {
@@ -64,10 +67,9 @@ export class BeneficiaryComponent implements OnInit {
   }
 
   saveBeneficiary(beneficiary: Beneficiary): void {
-    if (beneficiary.isFavorite) {
-      this.currentUser!.beneficiaries.push(beneficiary);
-      this.localStorageService.saveClient(this.currentUser!);
-    }
+    this.currentUser!.beneficiaries.push(beneficiary);
+    this.localStorageService.saveClient(this.currentUser!);
+    localStorage.setItem('currentUser', JSON.stringify(this.currentUser!))
 
     this.router.navigate(['/transfer']).then();
   }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Account, Client} from "../../models/models";
+import {Account, Client, TransferDetails} from "../../models/models";
 import {Router} from "@angular/router";
 
 @Component({
@@ -15,6 +15,7 @@ export class TransferComponent implements OnInit {
   labelError = '';
   currentUser?: Client;
   account?: Account;
+
   constructor(private router: Router) {
   }
 
@@ -53,8 +54,15 @@ export class TransferComponent implements OnInit {
       valid = false;
     }
 
-    if (valid)
-      alert('Transfer in progress...');
+    if (valid) {
+      const transferDetails: TransferDetails = {
+        amount: this.amount,
+        label: this.label,
+        beneficiary: this.currentUser!.beneficiaries[this.currentUser!.beneficiaries.length - 1]
+      }
+      localStorage.setItem("transferDetails", JSON.stringify(transferDetails));
+      this.router.navigate(['/transferConfirm']).then();
+    }
   }
 
   validateAmount(): boolean {

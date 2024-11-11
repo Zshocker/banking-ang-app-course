@@ -11,9 +11,18 @@ export interface Client {
 export interface Beneficiary {
   id: number;
   accountNumber?: string; // Optional for internal accounts
+  accountBalance?: number; // Optional for internal accounts
   iban?: string; // Optional for external accounts
   name: string;
   isFavorite: boolean; // To mark as favorite
+
+  isExternal : boolean
+}
+
+export interface TransferDetails {
+  amount: number,
+  label: string,
+  beneficiary : Beneficiary
 }
 
 export interface Account {

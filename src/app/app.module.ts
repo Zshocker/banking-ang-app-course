@@ -9,6 +9,7 @@ import {RouterOutlet} from "@angular/router";
 import {AppRoutingModule} from "./app-routing/app-routing.module";
 import { BeneficiaryComponent } from './components/beneficiary/beneficiary.component';
 import { TransferComponent } from './components/transfer/transfer.component';
+import { TransferConfirmationComponent } from './components/transfer-confirmation/transfer-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { TransferComponent } from './components/transfer/transfer.component';
     AuthComponent,
     SelectAccountComponent,
     BeneficiaryComponent,
-    TransferComponent
+    TransferComponent,
+    TransferConfirmationComponent
   ],
   imports: [
     AppRoutingModule,

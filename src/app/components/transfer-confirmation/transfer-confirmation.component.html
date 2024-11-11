@@ -1,0 +1,29 @@
+<div class="confirmation-container">
+  <h2>Transfer Confirmation</h2>
+
+  <!-- Transfer Summary -->
+  <div class="summary-section">
+    <h3>Transfer Details</h3>
+    <p><strong>Account to Debit:</strong> Account Number : {{ transferDetails!.beneficiary.accountNumber }}, Balance : {{transferDetails!.beneficiary.accountBalance| currency:'EUR'}}</p>
+    <p><strong>Beneficiary:</strong>
+      <span *ngIf="transferDetails!.beneficiary.isExternal">
+     IBAN : {{ transferDetails!.beneficiary.iban }} , Name : {{transferDetails!.beneficiary.name}}
+      </span>
+      <span *ngIf="!transferDetails!.beneficiary.isExternal">
+     Account Number : {{ transferDetails!.beneficiary.accountNumber }}
+        , Balance : {{transferDetails!.beneficiary.accountBalance| currency:'EUR'}}
+      </span>
+    </p>
+    <p><strong>Amount:</strong> {{ transferDetails!.amount | currency:'EUR' }}</p>
+    <p><strong>Label:</strong> {{ transferDetails!.label || 'No note provided' }}</p>
+  </div>
+
+  <!-- Error Message (if any) -->
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+  <!-- Confirm or Cancel Buttons -->
+  <div class="action-buttons">
+    <button (click)="confirmTransfer()">Confirm Transfer</button>
+    <button (click)="cancelTransfer()">Cancel</button>
+  </div>
+</div>
