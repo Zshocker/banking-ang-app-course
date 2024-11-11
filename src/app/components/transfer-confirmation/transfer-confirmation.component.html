@@ -4,7 +4,8 @@
   <!-- Transfer Summary -->
   <div class="summary-section">
     <h3>Transfer Details</h3>
-    <p><strong>Account to Debit:</strong> Account Number : {{ transferDetails!.beneficiary.accountNumber }}, Balance : {{transferDetails!.beneficiary.accountBalance| currency:'EUR'}}</p>
+    <p><strong>Account to Debit:</strong> Account Number : {{ account!.accountNumber }}, Balance
+      : {{account!.balance | currency:'EUR'}}</p>
     <p><strong>Beneficiary:</strong>
       <span *ngIf="transferDetails!.beneficiary.isExternal">
      IBAN : {{ transferDetails!.beneficiary.iban }} , Name : {{transferDetails!.beneficiary.name}}
