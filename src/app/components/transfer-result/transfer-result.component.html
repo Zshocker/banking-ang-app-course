@@ -1,0 +1,14 @@
+<div class="result-container">
+  <div *ngIf="isSuccess" class="success-message">
+    <h2>Transfer Successful</h2>
+    <p>Your transfer has been processed successfully.</p>
+    <p><strong>Reference Number:</strong> {{ referenceNumber }}</p>
+  </div>
+
+  <div *ngIf="!isSuccess" class="error-message">
+    <h2>Transfer Failed</h2>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <button (click)="goBack()">Return to Home</button>
+</div>

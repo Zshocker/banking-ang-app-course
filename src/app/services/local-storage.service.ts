@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Client} from "../models/models";
+import {Client, Transfer} from "../models/models";
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +7,7 @@ import {Client} from "../models/models";
 export class LocalStorageService {
 
   private clientsKey = 'clients';
+  private transfersKey = 'transfers';
 
   constructor() {
   }
@@ -37,6 +38,37 @@ export class LocalStorageService {
     }
 
     localStorage.setItem(this.clientsKey, JSON.stringify(clients));
+  }
+
+  getTransfers(): Transfer[] {
+    const transfers = localStorage.getItem(this.transfersKey);
+    return transfers ? JSON.parse(transfers) : [];
+  }
+
+  saveTransfers(transfers: Transfer[]): void {
+    localStorage.setItem(this.transfersKey, JSON.stringify(transfers));
+  }
+
+  saveTransfer(transfer: Transfer): void {
+    let transfers = this.getTransfers();
+    let client = this.getClients().find(cli => transfer.clientId == cli.id);
+
+    if (client) {
+      let account = client.accounts.find(acc => acc.id == transfer.accountId);
+      const otherAccount = !transfer.details.beneficiary.isExternal ? client.accounts.find(acc => acc.accountNumber == transfer.details.beneficiary.accountNumber) : undefined;
+      if (account) {
+        account.balance = account.balance - transfer.details.amount;
+        if (otherAccount)
+          otherAccount.balance = otherAccount.balance + transfer.details.amount;
+        this.saveClient(client);
+        transfers.push(transfer);
+        this.saveTransfers(transfers);
+      }
+    }
+  }
+
+  getClientsTransfers(clientId: number) {
+    return this.getTransfers().filter(x => x.clientId === clientId);
   }
 
   authenticate(username: string, password: string): { client?: Client, isBlocked: boolean } {

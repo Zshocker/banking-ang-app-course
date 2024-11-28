@@ -5,6 +5,7 @@ import {SelectAccountComponent} from "../components/select-account/select-accoun
 import {BeneficiaryComponent} from "../components/beneficiary/beneficiary.component";
 import {TransferComponent} from "../components/transfer/transfer.component";
 import {TransferConfirmationComponent} from "../components/transfer-confirmation/transfer-confirmation.component";
+import {TransferResultComponent} from "../components/transfer-result/transfer-result.component";
 
 
 const routes: Routes = [
@@ -14,10 +15,14 @@ const routes: Routes = [
   { path: 'beneficiary', component: BeneficiaryComponent },
   { path: 'transfer', component: TransferComponent },
   { path: 'transferConfirm', component: TransferConfirmationComponent },
+  { path: 'transfer-result', component: TransferResultComponent }
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+
+}

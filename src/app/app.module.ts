@@ -10,6 +10,8 @@ import {AppRoutingModule} from "./app-routing/app-routing.module";
 import { BeneficiaryComponent } from './components/beneficiary/beneficiary.component';
 import { TransferComponent } from './components/transfer/transfer.component';
 import { TransferConfirmationComponent } from './components/transfer-confirmation/transfer-confirmation.component';
+import { TransferResultComponent } from './components/transfer-result/transfer-result.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -18,13 +20,15 @@ import { TransferConfirmationComponent } from './components/transfer-confirmatio
     SelectAccountComponent,
     BeneficiaryComponent,
     TransferComponent,
-    TransferConfirmationComponent
+    TransferConfirmationComponent,
+    TransferResultComponent
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     FormsModule,
     RouterOutlet,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {Account, Client, getValidAccounts, TransferDetails} from "../../models/models";
+import {Account, Client, getValidAccounts, Transfer, TransferDetails} from "../../models/models";
+import {LocalStorageService} from "../../services/local-storage.service";
+import {ConnCheckerService} from "../../services/conn-checker.service";
 
 @Component({
   selector: 'app-transfer-confirmation',
@@ -13,7 +15,7 @@ export class TransferConfirmationComponent implements OnInit {
   account: Account | undefined;
   transferDetails?: TransferDetails;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private localStorageService: LocalStorageService, private connCheck: ConnCheckerService) {
   }
 
   ngOnInit(): void {
@@ -54,12 +56,29 @@ export class TransferConfirmationComponent implements OnInit {
     if (!this.validateTransferDetails()) {
       return;
     }
-    console.log('Transfer confirmed:', this.transferDetails);
-    alert('Transfer successfully confirmed!');
+    this.connCheck.checkInternetConnectivity()
+      .then(() => {
+        const transfer: Transfer = {
+          details: this.transferDetails!,
+          accountId: this.account!.id,
+          clientId: this.currentUser!.id,
+          id: new Date().getTime(),
+          createdAt: new Date()
+        }
+        this.localStorageService.saveTransfer(transfer);
+        this.router.navigate(['/transfer-result'], {
+          state: {isSuccess: true, referenceNumber: transfer.id}
+        }).then();
+      })
+      .catch(() => {
+        this.router.navigate(['/transfer-result'], {
+          state: {isSuccess: false, errorMessage: 'Transfer failed due to no internet connectivity.'}
+        }).then();
+      });
   }
 
   // Cancel transfer
   cancelTransfer() {
-    this.router.navigate(['/transfer']);
+    this.router.navigate(['/transfer']).then();
   }
 }

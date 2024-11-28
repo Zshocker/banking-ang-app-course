@@ -15,7 +15,6 @@ export interface Beneficiary {
   iban?: string; // Optional for external accounts
   name: string;
   isFavorite: boolean; // To mark as favorite
-
   isExternal : boolean
 }
 
@@ -35,4 +34,12 @@ export interface Account {
 
 export function getValidAccounts(client?: Client) {
   return client?.accounts.filter(s => s.accountNumber !== '' && s.isActive) ?? []
+}
+
+export interface Transfer {
+    id : number,
+    clientId : number,
+    accountId : number,
+    details : TransferDetails
+    createdAt : Date
 }
