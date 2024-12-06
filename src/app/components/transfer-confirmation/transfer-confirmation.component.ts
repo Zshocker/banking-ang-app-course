@@ -19,6 +19,10 @@ export class TransferConfirmationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  private loadData() {
     const storedUser = localStorage.getItem('currentUser');
     const storedAccountId = localStorage.getItem('storedAccountId');
     const transferDetails = localStorage.getItem('transferDetails');
@@ -35,12 +39,11 @@ export class TransferConfirmationComponent implements OnInit {
     if (!this.currentUser || !this.account || !this.transferDetails) {
       this.router.navigate(['/auth']).then(); // Redirect if not logged in
     }
-
-
   }
 
-  // Validate transfer details (e.g., sufficient balance)
+// Validate transfer details (e.g., sufficient balance)
   validateTransferDetails() {
+    this.loadData();
     if (this.transferDetails!.amount > this.account!.balance) {
       this.errorMessage = `Insufficient balance. Your current balance is €${this.account!.balance}.`;
       alert(this.errorMessage);
