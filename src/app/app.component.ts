@@ -11,7 +11,7 @@ export class AppComponent {
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit() {
-    if (this.localStorageService.getClients().length != 0) {
+    if (this.localStorageService.getClients().length == 0) {
       const initialClients: Client[] = [
         {
           id: 1,
